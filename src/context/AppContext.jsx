@@ -1,7 +1,9 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
-const HOST = '192.168.0.226:5000' // 'localhost:5000'; 
+//const HOST = '192.168.0.226:5000' 
+const HOST = 'localhost:5000'; 
 
 export const AppContext = createContext();
 
@@ -37,4 +39,8 @@ export const AppProvider = ({ children }) => {
       {children}
     </AppContext.Provider>
   );
-}; 
+};
+
+AppProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
