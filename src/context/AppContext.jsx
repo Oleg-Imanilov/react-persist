@@ -1,16 +1,19 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Create the context
+const HOST = '192.168.0.226:5000' // 'localhost:5000'; 
+
 export const AppContext = createContext();
 
 let needSave = false;
 let doc2save = {}
 setInterval(()=>{
-  axios.put(`http://localhost:5000/`, doc2save); 
-  doc2save = {}
-  needSave = false;
-}, 500);
+  if(needSave) {
+    axios.put(`http://${HOST}/`, doc2save); 
+    doc2save = {}
+    needSave = false;
+  }
+}, 1000);
 
 // Create the provider component
 export const AppProvider = ({ children }) => {
@@ -18,7 +21,7 @@ export const AppProvider = ({ children }) => {
 
   useEffect(()=>{
     (async () => {
-      const response = await axios.get("http://localhost:5000/"); // TODO: get from env or config
+      const response = await axios.get(`http://${HOST}/`); 
       setData(response.data);
     })()
   }, []);
